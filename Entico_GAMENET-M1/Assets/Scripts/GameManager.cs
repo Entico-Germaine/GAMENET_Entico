@@ -18,11 +18,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             if(playerPrefab != null)
             {
-                int xRandPoint = Random.Range(-20, 20);
-                int zRandomPoint = Random.Range(-20, 20);
-                int yPoint = 1;
-
-                PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(xRandPoint, yPoint, zRandomPoint), Quaternion.identity);
+                StartCoroutine(DelayedSpawn());
             }
         }
     }
@@ -58,5 +54,16 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
+    }
+
+    IEnumerator DelayedSpawn()
+    {
+        yield return new WaitForSeconds(3);
+
+        int xRandPoint = Random.Range(-20, 20);
+        int zRandomPoint = Random.Range(-20, 20);
+        int yPoint = 1;
+
+        PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(xRandPoint, yPoint, zRandomPoint), Quaternion.identity);
     }
 }
